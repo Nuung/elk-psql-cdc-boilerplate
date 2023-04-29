@@ -10,6 +10,9 @@
 
 ## Getting Start
 
+> https://elasticsearch-py.readthedocs.io/
+> https://sunscrapers.com/blog/how-to-use-elasticsearch-with-django/
+
 
 ## ENV 
 
