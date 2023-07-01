@@ -33,7 +33,6 @@ def get_csv_dict(file_path: str) -> List[Dict]:
             data_dict.append(data_processing(row))
     return data_dict
 
-
 def test_csv_to_datamodel():
     file_path = f"./platform_sales/platform_sales_300.csv"
     docs = get_csv_dict(file_path)

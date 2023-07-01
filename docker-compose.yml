@@ -224,5 +224,25 @@ services:
     networks:
       - esnet
 
+  logstash:
+    image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    volumes:
+      - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./postgresql.jar:/usr/share/logstash/postgresql.jar
+    environment:
+      - POSTGRES_HOST=호스트
+      - POSTGRES_PORT=포트
+      - POSTGRES_DB=데이터베이스
+      - POSTGRES_USER=사용자명
+      - POSTGRES_PASSWORD=비밀번호
+    depends_on:
+      - es01
+      - es02
+      - es03
+    networks:
+      - esnet
+
+
+
 networks:
   esnet:

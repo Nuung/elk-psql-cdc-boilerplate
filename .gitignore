@@ -8,6 +8,7 @@
 **/esdata03/**
 **/certs/**
 **/kibanadata/**
+**/logstash/**
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:
