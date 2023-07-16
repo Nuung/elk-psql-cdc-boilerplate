@@ -1,3 +1,5 @@
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FNuung%2Felk-psql-cdc-boilerplate&count_bg=%23A3BCFF&title_bg=%23555555&icon=elastic.svg&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
 # Elasticsearch Logstash Kibana stack, query based CDC
 
 > 2023) [Docker Compose Boilerplate] ELK stack for CDC from postgresql
