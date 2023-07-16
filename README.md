@@ -1,7 +1,6 @@
 # Elasticsearch Logstash Kibana stack, query based CDC
 
 > Docker Compose Boilerplate
->
 > ELK stack for CDC from postgresql
 
 ## 1. Getting Started
@@ -10,19 +9,12 @@
 ](https://velog.io/@qlgks1/Elasticsearch-ELK-stack-Postgresql-Logstash-query-based-CDC-%EB%A7%8C%EB%93%A4%EA%B8%B0-by-docker-compose)
 
 1. `git clone` (or `git init` & `git remote add origin ...` & `git pull`)
-
 2. check out the `.env-example` and `cp ./.env-example ./.env`
-
 3. **Postgreasql** - create table & insert datas by `src/db_dummy.sql`
-
 4. **Logstash** - create a file named `inspector-index.dat` at `logstash` directory with the content `--- 0`
-
 5. run `start.sh` (`source start.sh`), It will take more than 5min.
-
 6. Wait until the `setup` service finishes generating SSL certificates
-
 7. When it's done, go to kibana by `http://localhost:5601`
-
 8. This project's images are optimized for Intel-based operating systems.
 
 ![](./imgs/img1.png)
