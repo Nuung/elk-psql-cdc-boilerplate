@@ -40,7 +40,7 @@ inspector-index.dat
 .mtj.tmp/
 
 # Package Files #
-*.jar
+# *.jar
 *.war
 *.nar
 *.ear
