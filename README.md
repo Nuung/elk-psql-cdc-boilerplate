@@ -1,6 +1,7 @@
 # Elasticsearch Logstash Kibana stack, query based CDC
 
-> Docker Compose Boilerplate \n
+> Docker Compose Boilerplate
+>
 > ELK stack for CDC from postgresql
 
 ## 1. Getting Started
@@ -38,7 +39,7 @@
 5. `bootstrap.memory_lock=true`: Enables memory locking to prevent Elasticsearch from swapping memory to disk.
 6. `"ES_JAVA_OPTS=-Xms512m -Xmx512m"`: Sets the JVM options for Elasticsearch, specifying the minimum and maximum heap sizes.
 
-## 3. Additional Infor
+## 3. Additional Info
 
 - If you want to check out the jdbc option at logstash input, go to https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html#plugins-inputs-jdbc-jdbc_paging_enabled
 
