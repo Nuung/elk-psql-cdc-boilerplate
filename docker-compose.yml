@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   setup:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
@@ -68,17 +69,19 @@ services:
       setup:
         condition: service_healthy
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: es01
+    hostname: es01
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./esdata01:/usr/share/elasticsearch/data
     ports:
       - ${ES_PORT}:9200
     environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - node.name=es01
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01,es02,es03
       - discovery.seed_hosts=es02,es03
-      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - bootstrap.memory_lock=true
       - xpack.security.enabled=true
       - xpack.security.http.ssl.enabled=true
@@ -113,10 +116,13 @@ services:
     depends_on:
       - es01
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: es02
+    hostname: es02
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./esdata02:/usr/share/elasticsearch/data
     environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - node.name=es02
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01,es02,es03
@@ -155,10 +161,13 @@ services:
     depends_on:
       - es02
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
+    container_name: es03
+    hostname: es03
     volumes:
       - ./certs:/usr/share/elasticsearch/config/certs
       - ./esdata03:/usr/share/elasticsearch/data
     environment:
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
       - node.name=es03
       - cluster.name=${CLUSTER_NAME}
       - cluster.initial_master_nodes=es01,es02,es03
@@ -190,6 +199,8 @@ services:
       interval: 10s
       timeout: 10s
       retries: 120
+    networks:
+      - esnet
 
   kibana:
     depends_on:
@@ -200,6 +211,8 @@ services:
       es03:
         condition: service_healthy
     image: docker.elastic.co/kibana/kibana:${STACK_VERSION}
+    container_name: kibana
+    hostname: kibana
     volumes:
       - ./certs:/usr/share/kibana/config/certs
       - ./kibanadata:/usr/share/kibana/data
@@ -207,7 +220,7 @@ services:
       - ${KIBANA_PORT}:5601
     environment:
       - SERVERNAME=kibana
-      - ELASTICSEARCH_HOSTS=https://es01:9200
+      - ELASTICSEARCH_HOSTS=["https://es01:9200","https://es02:9200","https://es03:9200"]
       - ELASTICSEARCH_USERNAME=kibana_system
       - ELASTICSEARCH_PASSWORD=${KIBANA_PASSWORD}
       - ELASTICSEARCH_SSL_CERTIFICATEAUTHORITIES=config/certs/ca/ca.crt
@@ -226,15 +239,23 @@ services:
 
   logstash:
     image: docker.elastic.co/logstash/logstash:${STACK_VERSION}
+    container_name: logstash
+    hostname: logstash
     volumes:
       - ./logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - ./postgresql.jar:/usr/share/logstash/postgresql.jar
+      - ./logstash/inspector-index.dat:/usr/share/logstash/inspector-index.dat
+      - ./logstash/jar/postgresql-42.6.0.jar:/usr/share/logstash/postgresql.jar
+      - ./certs:/usr/share/logstash/certs
     environment:
-      - POSTGRES_HOST=호스트
-      - POSTGRES_PORT=포트
-      - POSTGRES_DB=데이터베이스
-      - POSTGRES_USER=사용자명
-      - POSTGRES_PASSWORD=비밀번호
+      - xpack.monitoring.enabled=false
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5044:5044
+    command: bash -c "logstash-plugin install logstash-integration-jdbc && logstash -f /usr/share/logstash/pipeline/logstash.conf"
     depends_on:
       - es01
       - es02
@@ -242,7 +263,21 @@ services:
     networks:
       - esnet
 
-
+  postgres:
+    image: postgres
+    container_name: postgres
+    hostname: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - esnet
 
 networks:
   esnet:

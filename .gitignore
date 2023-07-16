@@ -8,7 +8,8 @@
 **/esdata03/**
 **/certs/**
 **/kibanadata/**
-**/logstash/**
+inspector-index.dat
+**/postgresql/data/**
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:

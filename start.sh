@@ -1,5 +1,9 @@
 #!/bin/bash
-echo ">> Elasticsearch And Kibana Project Docker Compose Init"
-docker compose -f docker-compose.yml -p ek-docker-app stop
-docker compose -f docker-compose.yml -p ek-docker-app down
-docker compose -f docker-compose.yml -p ek-docker-app up -d
+echo ">> Init Elasticsearch, Kibana and Logstash Change Data Capcture from PSQL Project Docker Compose << "
+docker compose -f docker-compose.yml -p elk-cdc-app stop
+docker compose -f docker-compose.yml -p elk-cdc-app down
+docker compose -f docker-compose.yml -p elk-cdc-app up -d
+
+sleep 1
+
+docker compose -p elk-cdc-app logs -f
