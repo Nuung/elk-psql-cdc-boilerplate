@@ -1,7 +1,6 @@
 # Elasticsearch Logstash Kibana stack, query based CDC
 
-> Docker Compose Boilerplate
-> ELK stack for CDC from postgresql
+> 2023) [Docker Compose Boilerplate] ELK stack for CDC from postgresql
 
 ## 1. Getting Started
 
