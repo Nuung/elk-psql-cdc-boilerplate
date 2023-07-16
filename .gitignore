@@ -2,7 +2,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,git,visualstudiocode,python,java
 
 ### CUSTOM ###
-**/platform_sales/**
 **/esdata01/**
 **/esdata02/**
 **/esdata03/**
@@ -10,6 +9,7 @@
 **/kibanadata/**
 inspector-index.dat
 **/postgresql/data/**
+**/src/test-datas/**
 
 ### Git ###
 # Created by git for backups. To disable backups in Git:

@@ -7,7 +7,6 @@ from dateutil import parser
 
 
 def data_processing(data: Dict) -> Dict:
-    
     processed_data = dict()
     for k, v in data.items():
         if k in ["amount_sale", "amount_fee", "amount_deposit"]:
@@ -48,7 +47,7 @@ es = Elasticsearch(
 print(es.info())
 
 for i in range(10, 100):
-    file_path = f"./platform_sales/platform_sales_3{i}.csv"
+    file_path = f"../test-datas/platform_sales_3{i}.csv"
     docs = get_csv_dict(file_path)
     
     if i % 5 == 0:
