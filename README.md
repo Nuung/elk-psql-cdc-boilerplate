@@ -22,7 +22,6 @@
 
 ![](./imgs/img2.png)
 
-
 ## 2. Container ENV 
 
 1. `node.name=es-node1`: Specifies the name of the Elasticsearch node.
@@ -33,6 +32,8 @@
 6. `"ES_JAVA_OPTS=-Xms512m -Xmx512m"`: Sets the JVM options for Elasticsearch, specifying the minimum and maximum heap sizes.
 
 ## 3. Additional Info
+
+- To properly run the docker compose, it is crucial to verify the permissions of the executing user and the files and directories bound to the volumes! 
 
 - If you want to check out the jdbc option at logstash input, go to https://www.elastic.co/guide/en/logstash/current/plugins-inputs-jdbc.html#plugins-inputs-jdbc-jdbc_paging_enabled
 
